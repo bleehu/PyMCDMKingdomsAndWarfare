@@ -2,7 +2,7 @@ from enum import Enum
 from enum import IntEnum
 from pdb import set_trace
 
-from ..Trait import Trait
+from ..Traits import Trait
 
 
 class Unit:

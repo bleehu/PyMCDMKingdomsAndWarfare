@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from ..Unit.Unit import Unit
+from ..Units.Unit import Unit
 
 
 class Kingdom:
