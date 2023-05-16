@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="KingdomsAndWarfare",
-    version="1.0.0",
+    version="0.1.0",
     description="Kingdoms, Units, Unit Traits all for MCDM's excellent expansion for D&D",
     packages=["Kingdoms", "Units", "Traits"],
     python_requires=">=3.11",
