@@ -1,4 +1,4 @@
-from ..Kingdom.Kingdom import Kingdom
+from ..Kingdoms.Kingdom import Kingdom
 
 
 def test_kingdom():
