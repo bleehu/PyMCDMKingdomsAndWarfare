@@ -12,6 +12,7 @@ black = "*"
 isort = "*"
 build = "*"
 twine = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.11"
