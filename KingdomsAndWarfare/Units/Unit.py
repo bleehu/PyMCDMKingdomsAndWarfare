@@ -78,6 +78,13 @@ class Unit:
         if self.equipment == Unit.Equipment.SUPER_HEAVY:
             raise CannotUpgradeError("Cannot upgrade equipment past super-heavy.")
         self.equipment = self.equipment + 1
+    
+    def downgrade(self):
+        if self.experience == Unit.Experience.LEVIES:
+            raise CannotUpgradeError("Cannot downgrade Levies")
+        if self.equipment == Unit.Equipment.LIGHT:
+            raise CannotUpgradeError("Cannot downgrade equipment below Light")
+        self.equipment = self.equipment - 1
 
     def level_up(self):
         if self.experience == Unit.Experience.LEVIES:

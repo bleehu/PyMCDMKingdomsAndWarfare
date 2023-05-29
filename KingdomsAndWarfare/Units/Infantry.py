@@ -10,17 +10,21 @@ class Infantry(Unit):
         self.defense = self.defense + 2
         self.morale = self.morale + 2
         self.command = self.command + 2
+        super().level_up()
     
     def level_down(self) -> None:
         self.attack = self.attack - 1
         self.defense = self.defense - 2
         self.morale = self.morale - 2
         self.command = self.command - 2
+        super().level_down()
     
     def upgrade(self) -> None:
         self.power = self.power + 2
         self.toughness = self.toughness + 2
+        super().upgrade()
     
     def downgrade(self) -> None:
         self.power = self.power - 2
         self.toughness = self.toughness - 2
+        super().downgrade()
