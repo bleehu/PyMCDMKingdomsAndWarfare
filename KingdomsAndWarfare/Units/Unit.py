@@ -8,7 +8,7 @@ from ..Traits import Trait
 class Unit:
     class Type(Enum):
         INFANTRY = 1
-        ARTILLERT = 2
+        ARTILLERY = 2
         CAVALRY = 3
         AERIAL = 4
 
@@ -25,12 +25,11 @@ class Unit:
         HEAVY = 3
         SUPER_HEAVY = 4
 
-    def __init__(self, name: str, description: str, type: Type):
+    def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
         self.battles = 0
         self.traits = []
-        self.type = type
         self.experience = Unit.Experience.REGULAR
         self.equipment = Unit.Equipment.LIGHT
         self.damage = 1
@@ -42,10 +41,23 @@ class Unit:
         return clonedUnit
 
     def __eq__(self, __value: "Unit") -> bool:
-        matches = self.name == __value.name
-        matches = matches and self.description == __value.description
-        matches = matches and self.battles == __value.battles
-        matches = matches and self.type == __value.type
+        matches = self.name == __value.name \
+            and self.ancestry == __value.ancestry \
+            and self.attack == __value.attack \
+            and self.attacks == __value.attacks \
+            and self.battles == __value.battles \
+            and self.command == __value.command \
+            and self.damage == __value.damage \
+            and self.defense == __value.defense \
+            and self.description == __value.description \
+            and self.equipment == __value.equipment \
+            and self.experience == __value.experience \
+            and self.morale == __value.morale \
+            and self.power == __value.power \
+            and self.tier == __value.tier \
+            and self.toughness == __value.toughness \
+            and self.traits == __value.traits \
+            and self.type == __value.type
         return matches
 
     def add_trait(self, trait: Trait):

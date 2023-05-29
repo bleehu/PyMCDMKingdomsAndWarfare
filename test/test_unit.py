@@ -6,6 +6,9 @@ from ..KingdomsAndWarfare.Traits.Trait import Trait
 from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
 from ..KingdomsAndWarfare.Units.Unit import CannotUpgradeError
 from ..KingdomsAndWarfare.Units.Unit import Unit
+from ..KingdomsAndWarfare.Units.Infantry import Infantry
+from ..KingdomsAndWarfare.Units.Artillery import Artillery
+from ..KingdomsAndWarfare.Units.Cavalry import Cavalry
 
 
 # testing the unit class, not to be confused with unit tests...
@@ -42,6 +45,24 @@ def test_levelup():
     assert splonks.experience == Unit.Experience.SUPER_ELITE
     with pytest.raises(CannotLevelUpError):
         splonks.level_up()
+
+def test_level_up_undo():
+    units = [Infantry("Goldfish Infantry", "Goldfish with lightsabers"), 
+             Artillery("Gunslingers", "Slingers who throw guns"), 
+             Cavalry("Rhino Cavalry", "Rhinos riding very large horses")]
+    for unit in units:
+        assert unit.experience == Unit.Experience.REGULAR
+        my_clone = unit.clone()
+        unit.level_up()
+        unit.level_up()
+        unit.level_up()
+        assert unit.experience == Unit.Experience.SUPER_ELITE
+        unit.level_down()
+        unit.level_down()
+        unit.level_down()
+        assert unit.experience == Unit.Experience.REGULAR
+        assert my_clone == unit
+
 
 
 def test_levelup_levies():
