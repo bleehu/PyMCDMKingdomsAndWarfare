@@ -1,6 +1,6 @@
 import pytest
 
-from ..Traits.Trait import Trait
+from ..KingdomsAndWarfare.Traits.Trait import Trait
 
 
 def test_trait():

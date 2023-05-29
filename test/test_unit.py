@@ -2,10 +2,10 @@ from pdb import set_trace
 
 import pytest
 
-from ..Traits.Trait import Trait
-from ..Units.Unit import CannotLevelUpError
-from ..Units.Unit import CannotUpgradeError
-from ..Units.Unit import Unit
+from ..KingdomsAndWarfare.Traits.Trait import Trait
+from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
+from ..KingdomsAndWarfare.Units.Unit import CannotUpgradeError
+from ..KingdomsAndWarfare.Units.Unit import Unit
 
 
 # testing the unit class, not to be confused with unit tests...
