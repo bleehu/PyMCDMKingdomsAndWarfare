@@ -7,7 +7,8 @@ setup(
     name="KingdomsAndWarfare",
     version="0.2.0",
     description="Kingdoms, Units, Unit Traits all for MCDM's excellent expansion for D&D",
-    packages=["KingdomsAndWarfare"],
+    packages=["KingdomsAndWarfare.Units", "KingdomsAndWarfare.Traits", "KingdomsAndWarfare.Kingdoms"],
+    package_dir={"KingdomsAndWarfare":"KingdomsAndWarfare"},
     python_requires=">=3.11",
     project_urls={"Source": "https://github.com/bleehu/PyMCDMKingdomsAndWarfare"},
 )
