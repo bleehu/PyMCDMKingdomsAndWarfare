@@ -2,7 +2,7 @@ from datetime import datetime
 
 
 class Trait:
-    def __init__(self, name: str, description:str):
+    def __init__(self, name: str, description: str):
         self.name = name
         self.description = description
         self.created = str(datetime.now())
@@ -23,7 +23,7 @@ class Trait:
             "homebrew": self.homebrew,
         }
 
-    def from_dict(traitDict:dict) -> "Trait":
+    def from_dict(traitDict: dict) -> "Trait":
         newTrait = Trait(traitDict["name"], traitDict["description"])
         newTrait.homebrew = traitDict["homebrew"]
         newTrait.created = traitDict["created"]

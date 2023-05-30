@@ -1,5 +1,6 @@
 from .Unit import Unit
 
+
 class Artillery(Unit):
     def __init__(self, name: str, description: str):
         self.type = Unit.Type.ARTILLERY
@@ -13,7 +14,7 @@ class Artillery(Unit):
         if self.experience == Unit.Experience.REGULAR:
             self.attacks = self.attacks + 1
         super().level_up()
-    
+
     def level_down(self) -> None:
         self.attack = self.attack - 2
         self.defense = self.defense - 1
@@ -22,14 +23,14 @@ class Artillery(Unit):
         if self.experience == Unit.Experience.VETERAN:
             self.attacks = self.attacks - 1
         super().level_down()
-    
+
     def upgrade(self) -> None:
         """Upgrade a unit's equipment bonuses. This is usually done by spending gold.
         Throws a CannotUpgradeError if trying to upgrade past Super Heavy equipment."""
         self.power = self.power + 1
         self.toughness = self.toughness + 1
         super().upgrade()
-    
+
     def downgrade(self) -> None:
         """Downgrade a unit's equipment bonuses. This is usualy the 'undo' function for upgrading.
         Throws a CannotUpgradeError if trying to downgrade past Light equipment."""
