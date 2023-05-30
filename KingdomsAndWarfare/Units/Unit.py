@@ -11,6 +11,13 @@ class Unit:
         ARTILLERY = 2
         CAVALRY = 3
         AERIAL = 4
+    
+    class Tier(IntEnum):
+        I = 1
+        II = 2
+        III = 3
+        IV = 4
+        V = 5
 
     class Experience(IntEnum):
         LEVIES = 1
@@ -32,13 +39,16 @@ class Unit:
         self.traits = []
         self.experience = Unit.Experience.REGULAR
         self.equipment = Unit.Equipment.LIGHT
+        self.tier = Unit.Tier.I
+        self.attack = 0
+        self.defense = 10
+        self.power = 0
+        self.toughness = 10
+        self.morale = 0
+        self.command = 0
         self.damage = 1
         self.attacks = 1
-
-    def clone(self) -> "Unit":
-        clonedUnit = Unit(self.name, self.description, self.type)
-
-        return clonedUnit
+        self.ancestry = ""
 
     def __eq__(self, __value: "Unit") -> bool:
         matches = self.name == __value.name \

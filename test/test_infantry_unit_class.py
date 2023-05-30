@@ -3,7 +3,7 @@ from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import Unit
 
 def test_infantry():
-    splonks_infantry = Infantry("splonks_infantry Infantry", "splonks_infantry with butterknives", Unit.Type.INFANTRY)
+    splonks_infantry = Infantry("splonks_infantry Infantry", "splonks_infantry with butterknives")
     assert splonks_infantry.name == "splonks_infantry Infantry"
     assert splonks_infantry.experience == Unit.Experience.REGULAR
     assert splonks_infantry.type == Unit.Type.INFANTRY
