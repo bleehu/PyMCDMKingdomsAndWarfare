@@ -70,45 +70,67 @@ class Unit:
             and self.type == __value.type
         return matches
 
-    def add_trait(self, trait: Trait):
+    def add_trait(self, trait: Trait) -> None:
+        """Adds a trait that gives a unit special abilities or weaknesses to the unit.
+        Throws an error if more than 4 traits are added."""
         if len(self.traits) < 5:
             self.traits.append(trait)
         else:
             raise Exception("This unit already has 4 traits!")
 
-    def battle(self):
+    def battle(self) -> None:
+        """Credits the unit with 1 battle experience and if it has enough experience to 
+        level up, it does so."""
         self.battles = self.battles + 1
         if self.experience != Unit.Experience.LEVIES:
             if self.battles == 1 or self.battles == 4 or self.battles == 8:
                 self.level_up()
 
-    def upgrade(self):
+    def upgrade(self) -> None:
         if self.experience == Unit.Experience.LEVIES:
             raise CannotUpgradeError("Cannot upgrade Levies")
         if self.equipment == Unit.Equipment.SUPER_HEAVY:
             raise CannotUpgradeError("Cannot upgrade equipment past super-heavy.")
         self.equipment = self.equipment + 1
     
-    def downgrade(self):
+    def downgrade(self) -> None:
         if self.experience == Unit.Experience.LEVIES:
             raise CannotUpgradeError("Cannot downgrade Levies")
         if self.equipment == Unit.Equipment.LIGHT:
             raise CannotUpgradeError("Cannot downgrade equipment below Light")
         self.equipment = self.equipment - 1
 
-    def level_up(self):
+    def level_up(self) -> None:
+        """Bumps the experience of the unit up one level. Throws an error if 
+        you try to raise it above super-elite experience."""
         if self.experience == Unit.Experience.LEVIES:
             raise CannotLevelUpError("Cannot level up levies.")
         if self.experience == Unit.Experience.SUPER_ELITE:
             raise CannotLevelUpError("Cannot level up a unit past Super-elite.")
         self.experience = self.experience + 1
+        if self.experience == Unit.Experience.VETERAN:
+            self.battles = 1
+        elif self.experience == Unit.Experience.ELITE:
+            self.battles = 4
+        elif self.experience == Unit.Experience.SUPER_ELITE:
+            self.battles = 8
 
-    def level_down(self):
+    def level_down(self) -> None:
+        """Reduces the experience of the unit one level. Usually as an 'undo' for
+        leveling up a unit. Throws an error if you try to reduce a unit's level
+        below Regular."""
         if self.experience == Unit.Experience.LEVIES:
             raise CannotLevelUpError("Cannot level down levies.")
         if self.experience == Unit.Experience.REGULAR:
             raise CannotLevelUpError("Cannot lower level below regular.")
         self.experience = self.experience - 1
+        if self.experience == Unit.Experience.REGULAR:
+            self.battles = 0
+        elif self.experience == Unit.Experience.VETERAN:
+            self.battles = 1
+        elif self.experience == Unit.Experience.ELITE:
+            self.battles = 4
+        
 
 
 class CannotUpgradeError(Exception):
