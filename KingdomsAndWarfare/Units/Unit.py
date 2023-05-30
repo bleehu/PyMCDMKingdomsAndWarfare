@@ -11,7 +11,7 @@ class Unit:
         ARTILLERY = 2
         CAVALRY = 3
         AERIAL = 4
-    
+
     class Tier(IntEnum):
         I = 1
         II = 2
@@ -51,23 +51,25 @@ class Unit:
         self.ancestry = ""
 
     def __eq__(self, __value: "Unit") -> bool:
-        matches = self.name == __value.name \
-            and self.ancestry == __value.ancestry \
-            and self.attack == __value.attack \
-            and self.attacks == __value.attacks \
-            and self.battles == __value.battles \
-            and self.command == __value.command \
-            and self.damage == __value.damage \
-            and self.defense == __value.defense \
-            and self.description == __value.description \
-            and self.equipment == __value.equipment \
-            and self.experience == __value.experience \
-            and self.morale == __value.morale \
-            and self.power == __value.power \
-            and self.tier == __value.tier \
-            and self.toughness == __value.toughness \
-            and self.traits == __value.traits \
+        matches = (
+            self.name == __value.name
+            and self.ancestry == __value.ancestry
+            and self.attack == __value.attack
+            and self.attacks == __value.attacks
+            and self.battles == __value.battles
+            and self.command == __value.command
+            and self.damage == __value.damage
+            and self.defense == __value.defense
+            and self.description == __value.description
+            and self.equipment == __value.equipment
+            and self.experience == __value.experience
+            and self.morale == __value.morale
+            and self.power == __value.power
+            and self.tier == __value.tier
+            and self.toughness == __value.toughness
+            and self.traits == __value.traits
             and self.type == __value.type
+        )
         return matches
 
     def add_trait(self, trait: Trait) -> None:
@@ -79,7 +81,7 @@ class Unit:
             raise Exception("This unit already has 4 traits!")
 
     def battle(self) -> None:
-        """Credits the unit with 1 battle experience and if it has enough experience to 
+        """Credits the unit with 1 battle experience and if it has enough experience to
         level up, it does so."""
         self.battles = self.battles + 1
         if self.experience != Unit.Experience.LEVIES:
@@ -92,7 +94,7 @@ class Unit:
         if self.equipment == Unit.Equipment.SUPER_HEAVY:
             raise CannotUpgradeError("Cannot upgrade equipment past super-heavy.")
         self.equipment = self.equipment + 1
-    
+
     def downgrade(self) -> None:
         if self.experience == Unit.Experience.LEVIES:
             raise CannotUpgradeError("Cannot downgrade Levies")
@@ -101,7 +103,7 @@ class Unit:
         self.equipment = self.equipment - 1
 
     def level_up(self) -> None:
-        """Bumps the experience of the unit up one level. Throws an error if 
+        """Bumps the experience of the unit up one level. Throws an error if
         you try to raise it above super-elite experience."""
         if self.experience == Unit.Experience.LEVIES:
             raise CannotLevelUpError("Cannot level up levies.")
@@ -130,7 +132,6 @@ class Unit:
             self.battles = 1
         elif self.experience == Unit.Experience.ELITE:
             self.battles = 4
-        
 
 
 class CannotUpgradeError(Exception):

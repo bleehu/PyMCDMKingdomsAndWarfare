@@ -1,9 +1,13 @@
 import pytest
+
 from ..KingdomsAndWarfare.Units.Artillery import Artillery
 from ..KingdomsAndWarfare.Units.Unit import Unit
 
+
 def test_artillery():
-    splonks_artillery = Artillery("splonks_artillery artillery", "splonks_artillery with bottle rockets")
+    splonks_artillery = Artillery(
+        "splonks_artillery artillery", "splonks_artillery with bottle rockets"
+    )
     assert splonks_artillery.name == "splonks_artillery artillery"
     assert splonks_artillery.experience == Unit.Experience.REGULAR
     assert splonks_artillery.type == Unit.Type.ARTILLERY
@@ -16,8 +20,8 @@ def test_artillery_level_up():
     teddy_bear_artillery.command = 0
     assert teddy_bear_artillery.experience == Unit.Experience.REGULAR
     teddy_bear_artillery.level_up()
-    #assert stats were changed by level up correctly
-    #magic numbers provided by table from MCDM K&W page 99
+    # assert stats were changed by level up correctly
+    # magic numbers provided by table from MCDM K&W page 99
     assert teddy_bear_artillery.attacks == 2
     assert teddy_bear_artillery.attack == 2
     assert teddy_bear_artillery.defense == 11

@@ -1,6 +1,8 @@
 import pytest
+
 from ..KingdomsAndWarfare.Units.Cavalry import Cavalry
 from ..KingdomsAndWarfare.Units.Unit import Unit
+
 
 def test_cavalry():
     splonks_cavalry = Cavalry("splonks cavalry", "splonks_cavalry riding rockinghorses.")
@@ -16,8 +18,8 @@ def test_cavalry_level_up():
     teddy_bear_cavalry.command = 0
     assert teddy_bear_cavalry.experience == Unit.Experience.REGULAR
     teddy_bear_cavalry.level_up()
-    #assert stats were changed by level up correctly
-    #magic numbers provided by table from MCDM K&W page 99
+    # assert stats were changed by level up correctly
+    # magic numbers provided by table from MCDM K&W page 99
     assert teddy_bear_cavalry.attacks == 1
     assert teddy_bear_cavalry.attack == 1
     assert teddy_bear_cavalry.defense == 11
