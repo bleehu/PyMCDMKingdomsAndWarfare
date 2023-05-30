@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="KingdomsAndWarfare",
-    version="0.2.0",
+    version="0.2.1",
     description="Kingdoms, Units, Unit Traits all for MCDM's excellent expansion for D&D",
     packages=["KingdomsAndWarfare.Units", "KingdomsAndWarfare.Traits", "KingdomsAndWarfare.Kingdoms"],
     package_dir={"KingdomsAndWarfare":"KingdomsAndWarfare"},
