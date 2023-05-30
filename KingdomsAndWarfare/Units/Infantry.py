@@ -1,6 +1,5 @@
 from .Unit import Unit
 
-
 class Infantry(Unit):
     def __init__(self, name: str, description: str):
         self.type = Unit.Type.INFANTRY
