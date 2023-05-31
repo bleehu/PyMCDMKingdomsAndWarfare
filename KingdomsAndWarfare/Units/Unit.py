@@ -72,6 +72,12 @@ class Unit:
         )
         return matches
 
+    def __repr__(self) -> str:
+        return f"{self.name}: [{self.experience}, {self.equipment}, {self.ancestry}, {self.Type}] \
+            Tier: {self.tier}, \
+                ATK: {self.attack} DEF {self.defense} POW {self.power} TOU {self.toughness} \
+                MOR {self.morale} COM {self.command}. {self.attacks} attacks at {self.damage} each. Traits: {self.traits}."
+
     def add_trait(self, trait: Trait) -> None:
         """Adds a trait that gives a unit special abilities or weaknesses to the unit.
         Throws an error if more than 4 traits are added."""
@@ -133,10 +139,32 @@ class Unit:
         elif self.experience == Unit.Experience.ELITE:
             self.battles = 4
 
+    def to_dict(self) -> dict:
+        to_return = {"name": self.name,
+                     "description": self.description,
+                     "type": str(self.type),
+                     "battles": self.battles,
+                     "traits": [],
+                     "experience": self.experience,
+                     "equipment":self.equipment,
+                     "tier":self.tier,
+                     "attack": self.attack,
+                     "defense": self.defense,
+                     "power": self.power,
+                     "toughness": self.toughness,
+                     "morale": self.morale,
+                     "command": self.command,
+                     "damage": self.damage,
+                     "attacks": self.attacks,
+                     "ancestry": self.ancestry
+                     }
+        for trait in self.traits:
+            to_return["traits"].append(trait.to_dict())
+        return to_return
+
 
 class CannotUpgradeError(Exception):
     pass
-
 
 class CannotLevelUpError(Exception):
     pass
