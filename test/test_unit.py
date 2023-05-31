@@ -1,6 +1,8 @@
 from copy import deepcopy
 from pdb import set_trace
 
+from pdb import set_trace
+
 import pytest
 from copy import deepcopy
 
@@ -11,6 +13,7 @@ from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
 from ..KingdomsAndWarfare.Units.Unit import CannotUpgradeError
 from ..KingdomsAndWarfare.Units.Unit import Unit
+from ..KingdomsAndWarfare.Units.UnitFactory import unit_from_dict
 
 # testing the unit class, not to be confused with unit tests...
 # ... ok, these are unit tests, too, but still...
@@ -145,3 +148,46 @@ def test_upgrade_levies():
     levies.experience = Unit.Experience.LEVIES
     with pytest.raises(CannotUpgradeError):
         levies.upgrade()
+
+
+def test_typical_use():
+    catapult = Infantry("Catapult", "Cats with heavy pulitzer prize trophies.")
+    seige_weapon = Trait("Seige Weapon", "These cats will lay seige until given pets.")
+    assert catapult.attacks == 1
+    assert catapult.attack == 0
+    assert catapult.defense == 10
+    assert catapult.morale == 0
+    assert catapult.command == 0
+    assert catapult.experience == Unit.Experience.REGULAR
+    assert catapult.equipment == Unit.Equipment.LIGHT
+    catapult.add_trait(seige_weapon)
+    clone = deepcopy(catapult)
+    catapult.upgrade()
+    catapult.level_up()
+    assert catapult.attacks == 1
+    assert catapult.attack == 1
+    assert catapult.defense == 12
+    assert catapult.command == 1
+    assert catapult.experience == Unit.Experience.VETERAN
+    assert catapult.equipment == Unit.Equipment.MEDIUM
+    saved = catapult.to_dict()
+    loaded = unit_from_dict(saved)
+    assert loaded.attacks == 1
+    assert loaded.attack == 1
+    assert loaded.defense == 12
+    assert loaded.command == 1
+    assert loaded.experience == Unit.Experience.VETERAN
+    assert loaded.equipment == Unit.Equipment.MEDIUM
+    loaded.upgrade()
+    loaded.level_up()
+    #infantry leveled up twice to elite, heavy
+    assert loaded.attacks == 2
+    assert loaded.attack == 2
+    assert loaded.defense == 14
+    assert loaded.morale == 4
+    assert loaded.command == 1
+    loaded.level_down()
+    loaded.level_down()
+    loaded.downgrade()
+    loaded.downgrade()
+    assert loaded == clone

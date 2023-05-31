@@ -11,7 +11,7 @@ class Infantry(Unit):
         self.morale = self.morale + 2
         if self.experience != Unit.Experience.VETERAN:
             self.command = self.command + 1
-        if self.experience == Unit.Experience.ELITE:
+        if self.experience == Unit.Experience.VETERAN:
             self.attacks = self.attacks + 1
         super().level_up()
 
@@ -21,7 +21,7 @@ class Infantry(Unit):
         self.morale = self.morale - 2
         if self.experience != Unit.Experience.ELITE:
             self.command = self.command - 1
-        if self.experience == Unit.Experience.SUPER_ELITE:
+        if self.experience == Unit.Experience.ELITE:
             self.attacks = self.attacks - 1
         super().level_down()
 

@@ -26,7 +26,7 @@ def test_infantry_level_up():
     assert teddy_bear_infantry.command == 1
     assert teddy_bear_infantry.experience == Unit.Experience.VETERAN
     teddy_bear_infantry.level_up()
-    assert teddy_bear_infantry.attacks == 1
+    assert teddy_bear_infantry.attacks == 2
     assert teddy_bear_infantry.attack == 2
     assert teddy_bear_infantry.defense == 14
     assert teddy_bear_infantry.morale == 4
