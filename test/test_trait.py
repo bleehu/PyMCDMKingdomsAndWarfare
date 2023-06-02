@@ -29,12 +29,14 @@ def test_trait_from_dict():
     assert test_trait.description == trait_description
     assert not test_trait.homebrew
 
+
 def test_to_dict():
     test_trait = Trait("Water Breathing", "This unit's breath smells wet.")
     test_trait_dictionary = test_trait.to_dict()
     assert test_trait_dictionary["name"] == "Water Breathing"
     assert test_trait_dictionary["description"] == "This unit's breath smells wet."
     assert test_trait_dictionary["homebrew"] == True
+
 
 def test_trait_eq():
     trait_a = Trait("A", "A Description")

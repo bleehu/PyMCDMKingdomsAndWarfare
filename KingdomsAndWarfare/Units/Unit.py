@@ -140,24 +140,25 @@ class Unit:
             self.battles = 4
 
     def to_dict(self) -> dict:
-        to_return = {"name": self.name,
-                     "description": self.description,
-                     "type": str(self.type),
-                     "battles": self.battles,
-                     "traits": [],
-                     "experience": self.experience,
-                     "equipment":self.equipment,
-                     "tier":self.tier,
-                     "attack": self.attack,
-                     "defense": self.defense,
-                     "power": self.power,
-                     "toughness": self.toughness,
-                     "morale": self.morale,
-                     "command": self.command,
-                     "damage": self.damage,
-                     "attacks": self.attacks,
-                     "ancestry": self.ancestry
-                     }
+        to_return = {
+            "name": self.name,
+            "description": self.description,
+            "type": str(self.type),
+            "battles": self.battles,
+            "traits": [],
+            "experience": self.experience,
+            "equipment": self.equipment,
+            "tier": self.tier,
+            "attack": self.attack,
+            "defense": self.defense,
+            "power": self.power,
+            "toughness": self.toughness,
+            "morale": self.morale,
+            "command": self.command,
+            "damage": self.damage,
+            "attacks": self.attacks,
+            "ancestry": self.ancestry,
+        }
         for trait in self.traits:
             to_return["traits"].append(trait.to_dict())
         return to_return
@@ -165,6 +166,7 @@ class Unit:
 
 class CannotUpgradeError(Exception):
     pass
+
 
 class CannotLevelUpError(Exception):
     pass

@@ -10,6 +10,7 @@ def test_aerial():
     assert splonks_aerial.experience == Unit.Experience.REGULAR
     assert splonks_aerial.type == Unit.Type.AERIAL
 
+
 def test_aerial_level_up():
     teddy_bear_aerial = Aerial("Teddy Bear aerial", "Teddy Bears riding rockinghorses.")
     teddy_bear_aerial.attack = 0
@@ -40,6 +41,7 @@ def test_aerial_level_up():
     assert teddy_bear_aerial.morale == 3
     assert teddy_bear_aerial.command == 6
     assert teddy_bear_aerial.experience == Unit.Experience.SUPER_ELITE
+
 
 def test_aerial_upgrade():
     test_aerial = Aerial("Test", "Armed with personality tests.")

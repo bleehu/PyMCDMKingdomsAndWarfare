@@ -1,7 +1,7 @@
 from .Unit import Unit
 
-class Aerial(Unit):
 
+class Aerial(Unit):
     def __init__(self, name: str, description: str):
         self.type = Unit.Type.AERIAL
         super().__init__(name, description)

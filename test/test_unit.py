@@ -1,10 +1,7 @@
 from copy import deepcopy
 from pdb import set_trace
 
-from pdb import set_trace
-
 import pytest
-from copy import deepcopy
 
 from ..KingdomsAndWarfare.Traits.Trait import Trait
 from ..KingdomsAndWarfare.Units.Artillery import Artillery
@@ -14,6 +11,7 @@ from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
 from ..KingdomsAndWarfare.Units.Unit import CannotUpgradeError
 from ..KingdomsAndWarfare.Units.Unit import Unit
 from ..KingdomsAndWarfare.Units.UnitFactory import unit_from_dict
+
 
 # testing the unit class, not to be confused with unit tests...
 # ... ok, these are unit tests, too, but still...
@@ -50,10 +48,13 @@ def test_levelup():
     with pytest.raises(CannotLevelUpError):
         splonks.level_up()
 
+
 def test_level_up_undo():
-    units = [Infantry("Goldfish Infantry", "Goldfish with lightsabers"), 
-             Artillery("Gunslingers", "Slingers who throw guns"), 
-             Cavalry("Rhino Cavalry", "Rhinos riding very large horses")]
+    units = [
+        Infantry("Goldfish Infantry", "Goldfish with lightsabers"),
+        Artillery("Gunslingers", "Slingers who throw guns"),
+        Cavalry("Rhino Cavalry", "Rhinos riding very large horses"),
+    ]
     for unit in units:
         assert unit.experience == Unit.Experience.REGULAR
         my_clone = deepcopy(unit)
@@ -66,6 +67,7 @@ def test_level_up_undo():
         unit.level_down()
         assert unit.experience == Unit.Experience.REGULAR
         assert my_clone == unit
+
 
 def test_level_up_undo():
     units = [
@@ -106,10 +108,13 @@ def test_upgrade_infantry():
     with pytest.raises(CannotUpgradeError):
         infantry.upgrade()
 
+
 def test_upgrade_undo():
-    units = [Infantry("Creepy Puppets", "Puppets on magical strings."),
-                Artillery("Fish People", "Fish people with squirtguns."),
-                Cavalry("Sand People", "Riding Speeder bikes.")]
+    units = [
+        Infantry("Creepy Puppets", "Puppets on magical strings."),
+        Artillery("Fish People", "Fish people with squirtguns."),
+        Cavalry("Sand People", "Riding Speeder bikes."),
+    ]
     for unit in units:
         my_clone = deepcopy(unit)
         assert unit.equipment == Unit.Equipment.LIGHT
@@ -122,6 +127,7 @@ def test_upgrade_undo():
         unit.downgrade()
         assert unit.equipment == Unit.Equipment.LIGHT
         assert unit == my_clone
+
 
 def test_upgrade_undo():
     units = [
@@ -180,7 +186,7 @@ def test_typical_use():
     assert loaded.equipment == Unit.Equipment.MEDIUM
     loaded.upgrade()
     loaded.level_up()
-    #infantry leveled up twice to elite, heavy
+    # infantry leveled up twice to elite, heavy
     assert loaded.attacks == 2
     assert loaded.attack == 2
     assert loaded.defense == 14

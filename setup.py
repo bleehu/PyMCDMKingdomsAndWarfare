@@ -5,9 +5,13 @@ with open("README.md", "r") as f:
 
 setup(
     name="KingdomsAndWarfare",
-    version="0.2.2",
+    version="0.2.3",
     description="Kingdoms, Units, Unit Traits all for MCDM's excellent expansion for D&D",
-    packages=["KingdomsAndWarfare"],
+    packages=[
+        "KingdomsAndWarfare.Traits",
+        "KingdomsAndWarfare.Units",
+        "KingdomsAndWarfare.Kingdoms",
+    ],
     python_requires=">=3.11",
     project_urls={"Source": "https://github.com/bleehu/PyMCDMKingdomsAndWarfare"},
 )
