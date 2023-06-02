@@ -10,6 +10,7 @@ def test_cavalry():
     assert splonks_cavalry.experience == Unit.Experience.REGULAR
     assert splonks_cavalry.type == Unit.Type.CAVALRY
 
+
 def test_cavalry_level_up():
     teddy_bear_cavalry = Cavalry("Teddy Bear cavalry", "Teddy Bears riding rockinghorses.")
     teddy_bear_cavalry.attack = 0
@@ -40,6 +41,7 @@ def test_cavalry_level_up():
     assert teddy_bear_cavalry.morale == 3
     assert teddy_bear_cavalry.command == 6
     assert teddy_bear_cavalry.experience == Unit.Experience.SUPER_ELITE
+
 
 def test_cavalry_upgrade():
     test_cavalry = Cavalry("Test", "Armed with personality tests.")

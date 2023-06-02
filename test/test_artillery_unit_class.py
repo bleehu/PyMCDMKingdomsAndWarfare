@@ -12,6 +12,7 @@ def test_artillery():
     assert splonks_artillery.experience == Unit.Experience.REGULAR
     assert splonks_artillery.type == Unit.Type.ARTILLERY
 
+
 def test_artillery_level_up():
     teddy_bear_artillery = Artillery("Teddy Bear artillery", "Teddy Bears with Toy Swords")
     teddy_bear_artillery.attack = 0
@@ -42,6 +43,7 @@ def test_artillery_level_up():
     assert teddy_bear_artillery.morale == 3
     assert teddy_bear_artillery.command == 3
     assert teddy_bear_artillery.experience == Unit.Experience.SUPER_ELITE
+
 
 def test_artillery_upgrade():
     test_artillery = Artillery("Test", "Armed with personality tests.")
