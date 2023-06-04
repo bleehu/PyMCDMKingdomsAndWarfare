@@ -1,3 +1,5 @@
+import pdb
+
 from ..Traits.Trait import Trait
 from .Aerial import Aerial
 from .Artillery import Artillery
@@ -28,8 +30,8 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
     new_unit.traits = []
     for trait_dict in new_unit_dict["traits"]:
         new_unit.traits.append(Trait.from_dict(trait_dict))
-    new_unit.experience = new_unit_dict["experience"]
-    new_unit.equipment = new_unit_dict["equipment"]
+    new_unit.experience = parse_experience(new_unit_dict["experience"])
+    new_unit.equipment = parse_equipment(new_unit_dict["equipment"])
     new_unit.tier = new_unit_dict["tier"]
     new_unit.attack = int(new_unit_dict["attack"])
     new_unit.defense = int(new_unit_dict["defense"])
@@ -44,9 +46,52 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
 
 
 def parse_type(type_string: str) -> Unit.Type:
-    type_name = type_string.replace("Type.", "")
+    if len(type_string) == 1:
+        type_int = int(type_string)
+        if type_int < 1 or type_int > 4:
+            raise NoSuchUnitTypeError()
+        return Unit.Type(type_int)
+    type_name = type_string.upper().replace("TYPE.", "")
+    if type_name not in ["INFANTRY", "ARTILLERY", "AERIAL", "CAVALRY"]:
+        raise NoSuchUnitTypeError()
     return Unit.Type[type_name]
 
 
-class NoSuchUnitTypeError(Exception):
+def parse_experience(experience_string: str) -> Unit.Experience:
+    if len(experience_string) == 1:
+        type_int = int(experience_string)
+        if type_int < 1 or type_int > 5:
+            raise NoSuchUnitExperienceError()
+        return Unit.Experience(type_int)
+    type_name = experience_string.upper().replace("EXPERIENCE.", "")
+    if type_name not in ["LEVIES", "REGULAR", "VETERAN", "ELITE", "SUPER_ELITE"]:
+        raise NoSuchUnitExperienceError()
+    return Unit.Experience[type_name]
+
+
+def parse_equipment(equipment_string: str) -> Unit.Equipment:
+    if len(equipment_string) == 1:
+        type_int = int(equipment_string)
+        if type_int < 1 or type_int > 4:
+            raise NoSuchUnitEquipmentError()
+        return Unit.Equipment(type_int)
+    type_name = equipment_string.upper().replace("EQUIPMENT.", "")
+    if type_name not in ["LIGHT", "MEDIUM", "HEAVY", "SUPER_HEAVY"]:
+        raise NoSuchUnitEquipmentError()
+    return Unit.Equipment[type_name]
+
+
+class UnitError(Exception):
+    pass
+
+
+class NoSuchUnitTypeError(UnitError):
+    pass
+
+
+class NoSuchUnitExperienceError(UnitError):
+    pass
+
+
+class NoSuchUnitEquipmentError(UnitError):
     pass

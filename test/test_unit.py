@@ -10,6 +10,9 @@ from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
 from ..KingdomsAndWarfare.Units.Unit import CannotUpgradeError
 from ..KingdomsAndWarfare.Units.Unit import Unit
+from ..KingdomsAndWarfare.Units.UnitFactory import parse_equipment
+from ..KingdomsAndWarfare.Units.UnitFactory import parse_experience
+from ..KingdomsAndWarfare.Units.UnitFactory import parse_type
 from ..KingdomsAndWarfare.Units.UnitFactory import unit_from_dict
 
 
@@ -197,3 +200,51 @@ def test_typical_use():
     loaded.downgrade()
     loaded.downgrade()
     assert loaded == clone
+
+
+def test_parse_type():
+    assert parse_type("infantry") == Unit.Type.INFANTRY
+    assert parse_type("cavalry") == Unit.Type.CAVALRY
+    assert parse_type("artillery") == Unit.Type.ARTILLERY
+    assert parse_type("aerial") == Unit.Type.AERIAL
+    assert parse_type("TYPE.INFANTRY") == Unit.Type.INFANTRY
+    assert parse_type("TYPE.CAVALRY") == Unit.Type.CAVALRY
+    assert parse_type("TYPE.ARTILLERY") == Unit.Type.ARTILLERY
+    assert parse_type("TYPE.AERIAL") == Unit.Type.AERIAL
+    assert parse_type("1") == Unit.Type.INFANTRY
+    assert parse_type("2") == Unit.Type.ARTILLERY
+    assert parse_type("3") == Unit.Type.CAVALRY
+    assert parse_type("4") == Unit.Type.AERIAL
+
+
+def test_parse_equipment():
+    assert parse_equipment("light") == Unit.Equipment.LIGHT
+    assert parse_equipment("medium") == Unit.Equipment.MEDIUM
+    assert parse_equipment("heavy") == Unit.Equipment.HEAVY
+    assert parse_equipment("super_heavy") == Unit.Equipment.SUPER_HEAVY
+    assert parse_equipment("EQUIPMENT.LIGHT") == Unit.Equipment.LIGHT
+    assert parse_equipment("EQUIPMENT.MEDIUM") == Unit.Equipment.MEDIUM
+    assert parse_equipment("EQUIPMENT.HEAVY") == Unit.Equipment.HEAVY
+    assert parse_equipment("EQUIPMENT.SUPER_HEAVY") == Unit.Equipment.SUPER_HEAVY
+    assert parse_equipment("1") == Unit.Equipment.LIGHT
+    assert parse_equipment("2") == Unit.Equipment.MEDIUM
+    assert parse_equipment("3") == Unit.Equipment.HEAVY
+    assert parse_equipment("4") == Unit.Equipment.SUPER_HEAVY
+
+
+def test_parse_experience():
+    assert parse_experience("regular") == Unit.Experience.REGULAR
+    assert parse_experience("veteran") == Unit.Experience.VETERAN
+    assert parse_experience("elite") == Unit.Experience.ELITE
+    assert parse_experience("super_elite") == Unit.Experience.SUPER_ELITE
+    assert parse_experience("levies") == Unit.Experience.LEVIES
+    assert parse_experience("EXPERIENCE.REGULAR") == Unit.Experience.REGULAR
+    assert parse_experience("EXPERIENCE.VETERAN") == Unit.Experience.VETERAN
+    assert parse_experience("EXPERIENCE.ELITE") == Unit.Experience.ELITE
+    assert parse_experience("EXPERIENCE.SUPER_ELITE") == Unit.Experience.SUPER_ELITE
+    assert parse_experience("EXPERIENCE.LEVIES") == Unit.Experience.LEVIES
+    assert parse_experience("1") == Unit.Experience.LEVIES
+    assert parse_experience("2") == Unit.Experience.REGULAR
+    assert parse_experience("3") == Unit.Experience.VETERAN
+    assert parse_experience("4") == Unit.Experience.ELITE
+    assert parse_experience("5") == Unit.Experience.SUPER_ELITE

@@ -99,14 +99,14 @@ class Unit:
             raise CannotUpgradeError("Cannot upgrade Levies")
         if self.equipment == Unit.Equipment.SUPER_HEAVY:
             raise CannotUpgradeError("Cannot upgrade equipment past super-heavy.")
-        self.equipment = self.equipment + 1
+        self.equipment = Unit.Equipment(self.equipment + 1)
 
     def downgrade(self) -> None:
         if self.experience == Unit.Experience.LEVIES:
             raise CannotUpgradeError("Cannot downgrade Levies")
         if self.equipment == Unit.Equipment.LIGHT:
             raise CannotUpgradeError("Cannot downgrade equipment below Light")
-        self.equipment = self.equipment - 1
+        self.equipment = Unit.Equipment(self.equipment - 1)
 
     def level_up(self) -> None:
         """Bumps the experience of the unit up one level. Throws an error if
@@ -115,7 +115,7 @@ class Unit:
             raise CannotLevelUpError("Cannot level up levies.")
         if self.experience == Unit.Experience.SUPER_ELITE:
             raise CannotLevelUpError("Cannot level up a unit past Super-elite.")
-        self.experience = self.experience + 1
+        self.experience = Unit.Experience(self.experience + 1)
         if self.experience == Unit.Experience.VETERAN:
             self.battles = 1
         elif self.experience == Unit.Experience.ELITE:
@@ -131,7 +131,7 @@ class Unit:
             raise CannotLevelUpError("Cannot level down levies.")
         if self.experience == Unit.Experience.REGULAR:
             raise CannotLevelUpError("Cannot lower level below regular.")
-        self.experience = self.experience - 1
+        self.experience = Unit.Experience(self.experience - 1)
         if self.experience == Unit.Experience.REGULAR:
             self.battles = 0
         elif self.experience == Unit.Experience.VETERAN:
@@ -146,8 +146,8 @@ class Unit:
             "type": str(self.type),
             "battles": self.battles,
             "traits": [],
-            "experience": self.experience,
-            "equipment": self.equipment,
+            "experience": self.experience.name,
+            "equipment": self.equipment.name,
             "tier": self.tier,
             "attack": self.attack,
             "defense": self.defense,
