@@ -1,10 +1,11 @@
+import pdb
+
 from ..Traits.Trait import Trait
 from .Aerial import Aerial
 from .Artillery import Artillery
 from .Cavalry import Cavalry
 from .Infantry import Infantry
 from .Unit import Unit
-import pdb
 
 
 def unit_from_dict(new_unit_dict: dict) -> "Unit":
@@ -55,6 +56,7 @@ def parse_type(type_string: str) -> Unit.Type:
         raise NoSuchUnitTypeError()
     return Unit.Type[type_name]
 
+
 def parse_experience(experience_string: str) -> Unit.Experience:
     if len(experience_string) == 1:
         type_int = int(experience_string)
@@ -65,6 +67,7 @@ def parse_experience(experience_string: str) -> Unit.Experience:
     if type_name not in ["LEVIES", "REGULAR", "VETERAN", "ELITE", "SUPER_ELITE"]:
         raise NoSuchUnitExperienceError()
     return Unit.Experience[type_name]
+
 
 def parse_equipment(equipment_string: str) -> Unit.Equipment:
     if len(equipment_string) == 1:
@@ -77,14 +80,18 @@ def parse_equipment(equipment_string: str) -> Unit.Equipment:
         raise NoSuchUnitEquipmentError()
     return Unit.Equipment[type_name]
 
+
 class UnitError(Exception):
     pass
+
 
 class NoSuchUnitTypeError(UnitError):
     pass
 
+
 class NoSuchUnitExperienceError(UnitError):
     pass
+
 
 class NoSuchUnitEquipmentError(UnitError):
     pass

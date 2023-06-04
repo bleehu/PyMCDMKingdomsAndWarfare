@@ -201,6 +201,7 @@ def test_typical_use():
     loaded.downgrade()
     assert loaded == clone
 
+
 def test_parse_type():
     assert parse_type("infantry") == Unit.Type.INFANTRY
     assert parse_type("cavalry") == Unit.Type.CAVALRY
@@ -215,6 +216,7 @@ def test_parse_type():
     assert parse_type("3") == Unit.Type.CAVALRY
     assert parse_type("4") == Unit.Type.AERIAL
 
+
 def test_parse_equipment():
     assert parse_equipment("light") == Unit.Equipment.LIGHT
     assert parse_equipment("medium") == Unit.Equipment.MEDIUM
@@ -228,6 +230,7 @@ def test_parse_equipment():
     assert parse_equipment("2") == Unit.Equipment.MEDIUM
     assert parse_equipment("3") == Unit.Equipment.HEAVY
     assert parse_equipment("4") == Unit.Equipment.SUPER_HEAVY
+
 
 def test_parse_experience():
     assert parse_experience("regular") == Unit.Experience.REGULAR
