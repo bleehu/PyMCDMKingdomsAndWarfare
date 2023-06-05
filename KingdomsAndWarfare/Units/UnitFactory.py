@@ -35,6 +35,7 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
     new_unit.tier = new_unit_dict["tier"]
     new_unit.attack = int(new_unit_dict["attack"])
     new_unit.defense = int(new_unit_dict["defense"])
+    new_unit.size = int(new_unit_dict["size"])
     new_unit.power = int(new_unit_dict["power"])
     new_unit.toughness = int(new_unit_dict["toughness"])
     new_unit.morale = int(new_unit_dict["morale"])
