@@ -1,11 +1,9 @@
 import pdb
 
 from ..Traits.Trait import Trait
-from .Aerial import Aerial
-from .Artillery import Artillery
-from .Cavalry import Cavalry
-from .Infantry import Infantry
 from .Unit import Unit
+from .UnitType import UnitType
+from . import UnitEnums
 
 
 def unit_from_dict(new_unit_dict: dict) -> "Unit":
@@ -13,14 +11,14 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
     new_type = parse_type(new_unit_dict["type"])
     new_name = new_unit_dict["name"]
     new_description = new_unit_dict["description"]
-    if new_type == Unit.Type.INFANTRY:
-        new_unit = Infantry(new_name, new_description)
-    elif new_type == Unit.Type.CAVALRY:
-        new_unit = Cavalry(new_name, new_description)
-    elif new_type == Unit.Type.ARTILLERY:
-        new_unit = Artillery(new_name, new_description)
-    elif new_type == Unit.Type.AERIAL:
-        new_unit = Aerial(new_name, new_description)
+    if new_type == UnitEnums.Type.INFANTRY:
+        new_unit = Unit(new_name, UnitEnums.Type.INFANTRY, new_description)
+    elif new_type == UnitEnums.Type.CAVALRY:
+        new_unit = Unit(new_name, UnitEnums.Type.CAVALRY, new_description)
+    elif new_type == UnitEnums.Type.ARTILLERY:
+        new_unit = Unit(new_name, UnitEnums.Type.ARTILLERY, new_description)
+    elif new_type == UnitEnums.Type.AERIAL:
+        new_unit = Unit(new_name, UnitEnums.Type.AERIAL, new_description)
     else:
         raise NoSuchUnitTypeError(
             f"Could not instantiate unit type of {new_type}. \
@@ -46,40 +44,40 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
     return new_unit
 
 
-def parse_type(type_string: str) -> Unit.Type:
+def parse_type(type_string: str) -> UnitType:
     if len(type_string) == 1:
         type_int = int(type_string)
         if type_int < 1 or type_int > 4:
             raise NoSuchUnitTypeError()
-        return Unit.Type(type_int)
+        return UnitEnums.Type(type_int)
     type_name = type_string.upper().replace("TYPE.", "")
     if type_name not in ["INFANTRY", "ARTILLERY", "AERIAL", "CAVALRY"]:
         raise NoSuchUnitTypeError()
-    return Unit.Type[type_name]
+    return UnitEnums.Type[type_name]
 
 
-def parse_experience(experience_string: str) -> Unit.Experience:
+def parse_experience(experience_string: str) -> UnitEnums.Experience:
     if len(experience_string) == 1:
         type_int = int(experience_string)
         if type_int < 1 or type_int > 5:
             raise NoSuchUnitExperienceError()
-        return Unit.Experience(type_int)
+        return UnitEnums.Experience(type_int)
     type_name = experience_string.upper().replace("EXPERIENCE.", "")
     if type_name not in ["LEVIES", "REGULAR", "VETERAN", "ELITE", "SUPER_ELITE"]:
         raise NoSuchUnitExperienceError()
-    return Unit.Experience[type_name]
+    return UnitEnums.Experience[type_name]
 
 
-def parse_equipment(equipment_string: str) -> Unit.Equipment:
+def parse_equipment(equipment_string: str) -> UnitEnums.Equipment:
     if len(equipment_string) == 1:
         type_int = int(equipment_string)
         if type_int < 1 or type_int > 4:
             raise NoSuchUnitEquipmentError()
-        return Unit.Equipment(type_int)
+        return UnitEnums.Equipment(type_int)
     type_name = equipment_string.upper().replace("EQUIPMENT.", "")
     if type_name not in ["LIGHT", "MEDIUM", "HEAVY", "SUPER_HEAVY"]:
         raise NoSuchUnitEquipmentError()
-    return Unit.Equipment[type_name]
+    return UnitEnums.Equipment[type_name]
 
 
 class UnitError(Exception):
