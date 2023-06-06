@@ -159,7 +159,7 @@ class Unit:
         for trait in self.traits:
             to_return["traits"].append(trait.to_dict())
         return to_return
-    
+
     def battles_from_xp(experience: UnitEnums.Experience) -> int:
         if experience == UnitEnums.Experience.REGULAR or experience == UnitEnums.Experience.LEVIES:
             return 0
