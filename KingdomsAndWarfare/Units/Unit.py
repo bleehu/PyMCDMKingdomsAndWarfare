@@ -77,13 +77,13 @@ class Unit:
             and self.battles == __value.battles
             and self.command == __value.command
             and self.damage == __value.damage
-            and self.size == __value.size
             and self.defense == __value.defense
             and self.description == __value.description
             and self.equipment == __value.equipment
             and self.experience == __value.experience
             and self.morale == __value.morale
             and self.power == __value.power
+            and self.size == __value.size
             and self.tier == __value.tier
             and self.toughness == __value.toughness
             and self.traits == __value.traits
