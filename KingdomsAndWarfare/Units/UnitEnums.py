@@ -1,12 +1,6 @@
 from enum import Enum
 from enum import IntEnum
 
-class Type(Enum):
-    INFANTRY = 1
-    ARTILLERY = 2
-    CAVALRY = 3
-    AERIAL = 4
-
 class Tier(IntEnum):
     I = 1
     II = 2

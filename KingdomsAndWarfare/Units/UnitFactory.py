@@ -1,6 +1,10 @@
 import pdb
 
 from ..Traits.Trait import Trait
+from .Aerial import Aerial
+from .Artillery import Artillery
+from .Cavalry import Cavalry
+from .Infantry import Infantry
 from .Unit import Unit
 from .UnitType import UnitType
 from . import UnitEnums
@@ -11,19 +15,7 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
     new_type = parse_type(new_unit_dict["type"])
     new_name = new_unit_dict["name"]
     new_description = new_unit_dict["description"]
-    if new_type == UnitEnums.Type.INFANTRY:
-        new_unit = Unit(new_name, UnitEnums.Type.INFANTRY, new_description)
-    elif new_type == UnitEnums.Type.CAVALRY:
-        new_unit = Unit(new_name, UnitEnums.Type.CAVALRY, new_description)
-    elif new_type == UnitEnums.Type.ARTILLERY:
-        new_unit = Unit(new_name, UnitEnums.Type.ARTILLERY, new_description)
-    elif new_type == UnitEnums.Type.AERIAL:
-        new_unit = Unit(new_name, UnitEnums.Type.AERIAL, new_description)
-    else:
-        raise NoSuchUnitTypeError(
-            f"Could not instantiate unit type of {new_type}. \
-                                       Expected one of [Infantry, Cavalry, Artillery, Aerial]."
-        )
+    new_unit = Unit(new_name, new_type, new_description)
     new_unit.battles = int(new_unit_dict["battles"])
     new_unit.traits = []
     for trait_dict in new_unit_dict["traits"]:
@@ -45,15 +37,19 @@ def unit_from_dict(new_unit_dict: dict) -> "Unit":
 
 
 def parse_type(type_string: str) -> UnitType:
-    if len(type_string) == 1:
-        type_int = int(type_string)
-        if type_int < 1 or type_int > 4:
-            raise NoSuchUnitTypeError()
-        return UnitEnums.Type(type_int)
-    type_name = type_string.upper().replace("TYPE.", "")
-    if type_name not in ["INFANTRY", "ARTILLERY", "AERIAL", "CAVALRY"]:
-        raise NoSuchUnitTypeError()
-    return UnitEnums.Type[type_name]
+    if type_string == Aerial.__qualname__:
+        return Aerial
+    elif type_string == Artillery.__qualname__:
+        return Artillery
+    elif type_string == Cavalry.__qualname__:
+        return Cavalry
+    elif type_string == Infantry.__qualname__:
+        return Infantry
+    else:
+        raise NoSuchUnitTypeError(
+            f"Could not instantiate unit type of {type_string}. \
+                                       Expected one of [Infantry, Cavalry, Artillery, Aerial]."
+        )
 
 
 def parse_experience(experience_string: str) -> UnitEnums.Experience:

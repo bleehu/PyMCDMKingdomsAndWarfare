@@ -1,18 +1,19 @@
 import pytest
 
+from ..KingdomsAndWarfare.Units.Aerial import Aerial
 from ..KingdomsAndWarfare.Units.Unit import Unit
 from ..KingdomsAndWarfare.Units import UnitEnums
 
 
 def test_aerial():
-    splonks_aerial = Unit("splonks aerial", UnitEnums.Type.AERIAL, "splonks_aerial riding rockinghorses.")
+    splonks_aerial = Unit("splonks aerial", Aerial, "splonks_aerial riding rockinghorses.")
     assert splonks_aerial.name == "splonks aerial"
     assert splonks_aerial.experience == UnitEnums.Experience.REGULAR
-    assert splonks_aerial.unit_type == UnitEnums.Type.AERIAL
+    assert splonks_aerial.unit_type == Aerial
 
 
 def test_aerial_level_up():
-    teddy_bear_aerial = Unit("Teddy Bear aerial", UnitEnums.Type.AERIAL, "Teddy Bears riding rockinghorses.")
+    teddy_bear_aerial = Unit("Teddy Bear aerial", Aerial, "Teddy Bears riding rockinghorses.")
     teddy_bear_aerial.attack = 0
     teddy_bear_aerial.defense = 10
     teddy_bear_aerial.morale = 0
@@ -44,7 +45,7 @@ def test_aerial_level_up():
 
 
 def test_aerial_upgrade():
-    test_aerial = Unit("Test", UnitEnums.Type.AERIAL, "Armed with personality tests.")
+    test_aerial = Unit("Test", Aerial, "Armed with personality tests.")
     test_aerial.power = 0
     test_aerial.toughness = 10
     assert test_aerial.equipment == UnitEnums.Equipment.LIGHT

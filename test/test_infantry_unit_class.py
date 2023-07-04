@@ -1,18 +1,19 @@
 import pytest
 
+from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import Unit
 from ..KingdomsAndWarfare.Units import UnitEnums
 
 
 def test_infantry():
-    splonks_infantry = Unit("splonks_infantry Infantry", UnitEnums.Type.INFANTRY, "splonks_infantry with butterknives")
+    splonks_infantry = Unit("splonks_infantry Infantry", Infantry, "splonks_infantry with butterknives")
     assert splonks_infantry.name == "splonks_infantry Infantry"
     assert splonks_infantry.experience == UnitEnums.Experience.REGULAR
-    assert splonks_infantry.unit_type == UnitEnums.Type.INFANTRY
+    assert splonks_infantry.unit_type == Infantry
 
 
 def test_infantry_level_up():
-    teddy_bear_infantry = Unit("Teddy Bear Infantry", UnitEnums.Type.INFANTRY, "Teddy Bears with Toy Swords")
+    teddy_bear_infantry = Unit("Teddy Bear Infantry", Infantry, "Teddy Bears with Toy Swords")
     teddy_bear_infantry.attack = 0
     teddy_bear_infantry.defense = 10
     teddy_bear_infantry.morale = 0
@@ -44,7 +45,7 @@ def test_infantry_level_up():
 
 
 def test_infantry_upgrade():
-    test_infantry = Unit("Test", UnitEnums.Type.INFANTRY, "Armed with personality tests.")
+    test_infantry = Unit("Test", Infantry, "Armed with personality tests.")
     test_infantry.power = 0
     test_infantry.toughness = 10
     test_infantry.damage = 1

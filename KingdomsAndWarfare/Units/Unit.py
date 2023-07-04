@@ -2,17 +2,13 @@ from pdb import set_trace
 from typing import Self
 
 from . import UnitEnums
-from .Aerial import Aerial
-from .Artillery import Artillery
-from .Cavalry import Cavalry
-from .Infantry import Infantry
 from .UnitType import UnitType
 from ..Traits import Trait
 
 class Unit:
     def __init__(self, 
                  name: str, 
-                 unit_type: UnitEnums.Type,
+                 unit_type: type[UnitType],
                  description: str = '', 
                  ancestry: str = '', 
                  experience: UnitEnums.Experience = UnitEnums.Experience.REGULAR,
@@ -30,7 +26,6 @@ class Unit:
                  traits: list[str] = []):
         self.name = name
         self.unit_type = unit_type
-        self.upgrade_type = Unit.unit_type_from_enum(unit_type)
         self.description = description
         self.battles = Unit.battles_from_xp(experience)
         self.traits = traits
@@ -99,7 +94,7 @@ class Unit:
             raise CannotUpgradeError("Cannot upgrade Levies")
         if self.equipment == UnitEnums.Equipment.SUPER_HEAVY:
             raise CannotUpgradeError("Cannot upgrade equipment past super-heavy.")
-        self.power, self.toughness, self.damage = self.upgrade_type.upgrade(self.equipment, self.power, self.toughness, self.damage)
+        self.power, self.toughness, self.damage = self.unit_type.upgrade(self.equipment, self.power, self.toughness, self.damage)
         self.equipment = UnitEnums.Equipment(self.equipment + 1)
 
     def downgrade(self) -> None:
@@ -107,7 +102,7 @@ class Unit:
             raise CannotUpgradeError("Cannot downgrade Levies")
         if self.equipment == UnitEnums.Equipment.LIGHT:
             raise CannotUpgradeError("Cannot downgrade equipment below Light")
-        self.power, self.toughness, self.damage = self.upgrade_type.downgrade(self.equipment, self.power, self.toughness, self.damage)
+        self.power, self.toughness, self.damage = self.unit_type.downgrade(self.equipment, self.power, self.toughness, self.damage)
         self.equipment = UnitEnums.Equipment(self.equipment - 1)
 
     def level_up(self) -> None:
@@ -118,7 +113,7 @@ class Unit:
         if self.experience == UnitEnums.Experience.SUPER_ELITE:
             raise CannotLevelUpError("Cannot level up a unit past Super-elite.")
         self.attacks, self.attack, self.defense, self.morale, self.command = \
-            self.upgrade_type.level_up(self.experience, self.attacks, self.attack, self.defense, self.morale, self.command)
+            self.unit_type.level_up(self.experience, self.attacks, self.attack, self.defense, self.morale, self.command)
         self.experience = UnitEnums.Experience(self.experience + 1)
         self.battles = Unit.battles_from_xp(self.experience)
 
@@ -131,7 +126,7 @@ class Unit:
         if self.experience == UnitEnums.Experience.REGULAR:
             raise CannotLevelUpError("Cannot lower level below regular.")
         self.attacks, self.attack, self.defense, self.morale, self.command = \
-            self.upgrade_type.level_down(self.experience, self.attacks, self.attack, self.defense, self.morale, self.command)
+            self.unit_type.level_down(self.experience, self.attacks, self.attack, self.defense, self.morale, self.command)
         self.experience = UnitEnums.Experience(self.experience - 1)
         self.battles = Unit.battles_from_xp(self.experience)
 
@@ -139,7 +134,7 @@ class Unit:
         to_return = {
             "name": self.name,
             "description": self.description,
-            "type": str(self.unit_type),
+            "type": self.unit_type.__qualname__,
             "battles": self.battles,
             "traits": [],
             "experience": self.experience.name,
@@ -171,18 +166,6 @@ class Unit:
             return 8
         else:
             raise NoSuchUnitExperienceError("Invalid unit experience detected: " + str(experience))
-    
-    def unit_type_from_enum(unit_type: UnitEnums.Type) -> type[UnitType]:
-        if unit_type == UnitEnums.Type.AERIAL:
-            return Aerial
-        elif unit_type == UnitEnums.Type.ARTILLERY:
-            return Artillery
-        elif unit_type == UnitEnums.Type.CAVALRY:
-            return Cavalry
-        elif unit_type == UnitEnums.Type.INFANTRY:
-            return Infantry
-        else:
-            raise NoSuchUnitTypeError("Invalid unit type detected: " + str(unit_type))
 
 
 class CannotUpgradeError(Exception):

@@ -1,20 +1,21 @@
 import pytest
 
+from ..KingdomsAndWarfare.Units.Artillery import Artillery
 from ..KingdomsAndWarfare.Units.Unit import Unit
 from ..KingdomsAndWarfare.Units import UnitEnums
 
 
 def test_artillery():
     splonks_artillery = Unit(
-        "splonks_artillery artillery", UnitEnums.Type.ARTILLERY, "splonks_artillery with bottle rockets"
+        "splonks_artillery artillery", Artillery, "splonks_artillery with bottle rockets"
     )
     assert splonks_artillery.name == "splonks_artillery artillery"
     assert splonks_artillery.experience == UnitEnums.Experience.REGULAR
-    assert splonks_artillery.unit_type == UnitEnums.Type.ARTILLERY
+    assert splonks_artillery.unit_type == Artillery
 
 
 def test_artillery_level_up():
-    teddy_bear_artillery = Unit("Teddy Bear artillery", UnitEnums.Type.ARTILLERY, "Teddy Bears with Toy Swords")
+    teddy_bear_artillery = Unit("Teddy Bear artillery", Artillery, "Teddy Bears with Toy Swords")
     teddy_bear_artillery.attack = 0
     teddy_bear_artillery.defense = 10
     teddy_bear_artillery.morale = 0
@@ -46,7 +47,7 @@ def test_artillery_level_up():
 
 
 def test_artillery_upgrade():
-    test_artillery = Unit("Test", UnitEnums.Type.ARTILLERY, "Armed with personality tests.")
+    test_artillery = Unit("Test", Artillery, "Armed with personality tests.")
     test_artillery.power = 0
     test_artillery.toughness = 10
     assert test_artillery.equipment == UnitEnums.Equipment.LIGHT

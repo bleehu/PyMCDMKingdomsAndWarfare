@@ -5,6 +5,7 @@ import pytest
 
 from ..KingdomsAndWarfare.Traits.Trait import Trait
 from ..KingdomsAndWarfare.Units.Artillery import Artillery
+from ..KingdomsAndWarfare.Units.Aerial import Aerial
 from ..KingdomsAndWarfare.Units.Cavalry import Cavalry
 from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
@@ -22,7 +23,7 @@ from ..KingdomsAndWarfare.Units import UnitEnums
 def test_unit():
     unit_name = "Splonks Infantry"
     unit_description = "Splonks with swords, mostly."
-    splonks = Unit(unit_name, UnitEnums.Type.INFANTRY, unit_description)
+    splonks = Unit(unit_name, Infantry, unit_description)
 
     assert splonks.name == unit_name
     assert splonks.description == unit_description
@@ -34,7 +35,7 @@ def test_unit():
 
 
 def test_levelup():
-    splonks = Unit("Splonks Infantry", UnitEnums.Type.INFANTRY, "Splonks with knives.")
+    splonks = Unit("Splonks Infantry", Infantry, "Splonks with knives.")
     assert splonks.battles == 0
     assert splonks.experience == UnitEnums.Experience.REGULAR
     splonks.battle()
@@ -55,9 +56,9 @@ def test_levelup():
 
 def test_level_up_undo():
     units = [
-        Unit("Goldfish Infantry", UnitEnums.Type.INFANTRY, "Goldfish with lightsabers"),
-        Unit("Gunslingers", UnitEnums.Type.ARTILLERY, "Slingers who throw guns"),
-        Unit("Rhino Cavalry", UnitEnums.Type.CAVALRY, "Rhinos riding very large horses"),
+        Unit("Goldfish Infantry", Infantry, "Goldfish with lightsabers"),
+        Unit("Gunslingers", Artillery, "Slingers who throw guns"),
+        Unit("Rhino Cavalry", Cavalry, "Rhinos riding very large horses"),
     ]
     for unit in units:
         assert unit.experience == UnitEnums.Experience.REGULAR
@@ -75,9 +76,9 @@ def test_level_up_undo():
 
 def test_level_up_undo():
     units = [
-        Unit("Goldfish Infantry", UnitEnums.Type.INFANTRY, "Goldfish with lightsabers"),
-        Unit("Gunslingers", UnitEnums.Type.ARTILLERY, "Slingers who throw guns"),
-        Unit("Rhino Cavalry", UnitEnums.Type.CAVALRY, "Rhinos riding very large horses"),
+        Unit("Goldfish Infantry", Infantry, "Goldfish with lightsabers"),
+        Unit("Gunslingers", Artillery, "Slingers who throw guns"),
+        Unit("Rhino Cavalry", Cavalry, "Rhinos riding very large horses"),
     ]
     for unit in units:
         assert unit.experience == UnitEnums.Experience.REGULAR
@@ -94,14 +95,14 @@ def test_level_up_undo():
 
 
 def test_levelup_levies():
-    splonks = Unit("Splonks levies", UnitEnums.Type.INFANTRY, "Splonk levies use pumpkins as balaclavas.")
+    splonks = Unit("Splonks levies", Infantry, "Splonk levies use pumpkins as balaclavas.")
     splonks.experience = UnitEnums.Experience.LEVIES
     with pytest.raises(CannotLevelUpError):
         splonks.level_up()
 
 
 def test_upgrade_infantry():
-    infantry = Unit("Splonks Infantry", UnitEnums.Type.INFANTRY, "Splonkitude")
+    infantry = Unit("Splonks Infantry", Infantry, "Splonkitude")
     assert infantry.equipment == UnitEnums.Equipment.LIGHT
     infantry.upgrade()
     assert infantry.equipment == UnitEnums.Equipment.MEDIUM
@@ -115,9 +116,9 @@ def test_upgrade_infantry():
 
 def test_upgrade_undo():
     units = [
-        Unit("Creepy Puppets", UnitEnums.Type.INFANTRY, "Puppets on magical strings."),
-        Unit("Fish People", UnitEnums.Type.ARTILLERY, "Fish people with squirtguns."),
-        Unit("Sand People", UnitEnums.Type.CAVALRY, "Riding Speeder bikes."),
+        Unit("Creepy Puppets", Infantry, "Puppets on magical strings."),
+        Unit("Fish People", Artillery, "Fish people with squirtguns."),
+        Unit("Sand People", Cavalry, "Riding Speeder bikes."),
     ]
     for unit in units:
         my_clone = deepcopy(unit)
@@ -135,9 +136,9 @@ def test_upgrade_undo():
 
 def test_upgrade_undo():
     units = [
-        Unit("Creepy Puppets", UnitEnums.Type.INFANTRY, "Puppets on magical strings."),
-        Unit("Fish People", UnitEnums.Type.ARTILLERY, "Fish people with squirtguns."),
-        Unit("Sand People", UnitEnums.Type.CAVALRY, "Riding Speeder bikes."),
+        Unit("Creepy Puppets", Infantry, "Puppets on magical strings."),
+        Unit("Fish People", Artillery, "Fish people with squirtguns."),
+        Unit("Sand People", Cavalry, "Riding Speeder bikes."),
     ]
     for unit in units:
         my_clone = deepcopy(unit)
@@ -154,14 +155,14 @@ def test_upgrade_undo():
 
 
 def test_upgrade_levies():
-    levies = Unit("Splonks Levies", UnitEnums.Type.INFANTRY, "Cucumbers")
+    levies = Unit("Splonks Levies", Infantry, "Cucumbers")
     levies.experience = UnitEnums.Experience.LEVIES
     with pytest.raises(CannotUpgradeError):
         levies.upgrade()
 
 
 def test_typical_use():
-    catapult = Unit("Catapult", UnitEnums.Type.INFANTRY, "Cats with heavy pulitzer prize trophies.")
+    catapult = Unit("Catapult", Infantry, "Cats with heavy pulitzer prize trophies.")
     seige_weapon = Trait("Seige Weapon", "These cats will lay seige until given pets.")
     assert catapult.attacks == 1
     assert catapult.attack == 0
@@ -214,18 +215,10 @@ def test_typical_use():
 
 
 def test_parse_type():
-    assert parse_type("infantry") == UnitEnums.Type.INFANTRY
-    assert parse_type("cavalry") == UnitEnums.Type.CAVALRY
-    assert parse_type("artillery") == UnitEnums.Type.ARTILLERY
-    assert parse_type("aerial") == UnitEnums.Type.AERIAL
-    assert parse_type("TYPE.INFANTRY") == UnitEnums.Type.INFANTRY
-    assert parse_type("TYPE.CAVALRY") == UnitEnums.Type.CAVALRY
-    assert parse_type("TYPE.ARTILLERY") == UnitEnums.Type.ARTILLERY
-    assert parse_type("TYPE.AERIAL") == UnitEnums.Type.AERIAL
-    assert parse_type("1") == UnitEnums.Type.INFANTRY
-    assert parse_type("2") == UnitEnums.Type.ARTILLERY
-    assert parse_type("3") == UnitEnums.Type.CAVALRY
-    assert parse_type("4") == UnitEnums.Type.AERIAL
+    assert parse_type(Infantry.__qualname__) == Infantry
+    assert parse_type(Cavalry.__qualname__) == Cavalry
+    assert parse_type(Artillery.__qualname__) == Artillery
+    assert parse_type(Aerial.__qualname__) == Aerial
 
 
 def test_parse_equipment():

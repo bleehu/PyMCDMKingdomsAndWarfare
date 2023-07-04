@@ -1,18 +1,19 @@
 import pytest
 
+from ..KingdomsAndWarfare.Units.Cavalry import Cavalry
 from ..KingdomsAndWarfare.Units.Unit import Unit
 from ..KingdomsAndWarfare.Units import UnitEnums
 
 
 def test_cavalry():
-    splonks_cavalry = Unit("splonks cavalry", UnitEnums.Type.CAVALRY, "splonks_cavalry riding rockinghorses.")
+    splonks_cavalry = Unit("splonks cavalry", Cavalry, "splonks_cavalry riding rockinghorses.")
     assert splonks_cavalry.name == "splonks cavalry"
     assert splonks_cavalry.experience == UnitEnums.Experience.REGULAR
-    assert splonks_cavalry.unit_type == UnitEnums.Type.CAVALRY
+    assert splonks_cavalry.unit_type == Cavalry
 
 
 def test_cavalry_level_up():
-    teddy_bear_cavalry = Unit("Teddy Bear cavalry", UnitEnums.Type.CAVALRY, "Teddy Bears riding rockinghorses.")
+    teddy_bear_cavalry = Unit("Teddy Bear cavalry", Cavalry, "Teddy Bears riding rockinghorses.")
     teddy_bear_cavalry.attack = 0
     teddy_bear_cavalry.defense = 10
     teddy_bear_cavalry.morale = 0
@@ -44,7 +45,7 @@ def test_cavalry_level_up():
 
 
 def test_cavalry_upgrade():
-    test_cavalry = Unit("Test", UnitEnums.Type.CAVALRY, "Armed with personality tests.")
+    test_cavalry = Unit("Test", Cavalry, "Armed with personality tests.")
     test_cavalry.power = 0
     test_cavalry.toughness = 10
     assert test_cavalry.equipment == UnitEnums.Equipment.LIGHT
