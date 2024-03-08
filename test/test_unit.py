@@ -4,8 +4,8 @@ from pdb import set_trace
 import pytest
 
 from ..KingdomsAndWarfare.Traits.Trait import Trait
-from ..KingdomsAndWarfare.Units.Artillery import Artillery
 from ..KingdomsAndWarfare.Units.Aerial import Aerial
+from ..KingdomsAndWarfare.Units.Artillery import Artillery
 from ..KingdomsAndWarfare.Units.Cavalry import Cavalry
 from ..KingdomsAndWarfare.Units.Infantry import Infantry
 from ..KingdomsAndWarfare.Units.Unit import CannotLevelUpError
@@ -212,6 +212,25 @@ def test_typical_use():
     loaded.downgrade()
     loaded.downgrade()
     assert loaded == clone
+
+def test_infantry_attack():
+    attacker = Unit("Attacker", Infantry, "The attacker in the test scenario.")
+    attacker.attack = 1
+    attacker.power = 1
+    attacker.damage = 1
+    target = Unit("Defender", Infantry, "The Defender in the test scenario.")
+    target.defense = 11
+    target.toughness = 11
+    target.size = 6
+    target.casualties = 6
+    assert target.casualties == 6
+    attacker.attack_unit(target, 9, 9) #this attack should miss
+    assert target.casualties == 6
+    attacker.attack_unit(target, 10, 9) #the attack test should win, the power test should miss, dealing exactly 1 casualty
+    assert target.casualties == 5
+    attacker.attack_unit(target, 10, 10) #both attack and power succeed, dealing 2 casualties
+    assert target.casualties == 3
+    assert target.get_diminished()
 
 
 def test_parse_type():

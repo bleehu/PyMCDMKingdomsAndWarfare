@@ -1,4 +1,5 @@
 from pdb import set_trace
+from warnings import warn
 from typing import Self
 from random import randint
 
@@ -133,13 +134,19 @@ class Unit:
         self.experience = UnitEnums.Experience(self.experience - 1)
         self.battles = Unit.battles_from_xp(self.experience)
 
-    def attack(self, target: "Unit", attack_roll: int, power_roll: int):
+    def attack_unit(self, target: "Unit", attack_roll: int, power_roll: int):
+        """attacking_unit.attack(target_unit, )"""
+        if(self == target):
+            warn(f"Unit {self.name} is attacking itself!")
         attack_score = attack_roll + self.attack
         if (attack_score >= target.defense):
             target.casualties = target.casualties - 1
             power_score = power_roll + self.power
             if (power_score >= target.toughness):
                 target.casualties = target.casualties - self.damage
+    
+    def get_diminished(self):
+        return self.casualties * 2 >= self.size
 
 
     def to_dict(self) -> dict:
