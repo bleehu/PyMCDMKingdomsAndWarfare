@@ -2,6 +2,7 @@ from enum import Enum
 from enum import IntEnum
 from pdb import set_trace
 from typing import Self
+from random import randint
 
 from ..Traits import Trait
 
@@ -65,6 +66,7 @@ class Unit:
         self.command = command
         self.damage = damage
         self.size = size
+        self.casualties = size
         self.attacks = attacks
         self.ancestry = ancestry
 
@@ -84,6 +86,7 @@ class Unit:
             and self.morale == __value.morale
             and self.power == __value.power
             and self.size == __value.size
+            and self.casualties == __value.casualties
             and self.tier == __value.tier
             and self.toughness == __value.toughness
             and self.traits == __value.traits
@@ -95,7 +98,7 @@ class Unit:
         return f"{self.name}: [{self.experience}, {self.equipment}, {self.ancestry}, {self.Type}] \
             Tier: {self.tier}, \
                 ATK: {self.attack} DEF {self.defense} POW {self.power} TOU {self.toughness} \
-                MOR {self.morale} COM {self.command}. Size {self.size}. {self.attacks} attacks \
+                MOR {self.morale} COM {self.command}. Casualties/Size {self.casualties}/{self.size}. {self.attacks} attacks \
                 at {self.damage} each. Traits: {self.traits}."
 
     def add_trait(self, trait: Trait) -> None:
@@ -149,6 +152,15 @@ class Unit:
         self.experience = Unit.Experience(self.experience - 1)
         self.battles = Unit.battles_from_xp(self.experience)
 
+    def attack(self, target: "Unit", attack_roll: int, power_roll: int):
+        attack_score = attack_roll + self.attack
+        if (attack_score >= target.defense):
+            target.casualties = target.casualties - 1
+            power_score = power_roll + self.power
+            if (power_score >= target.toughness):
+                target.casualties = target.casualties - self.damage
+
+
     def to_dict(self) -> dict:
         to_return = {
             "name": self.name,
@@ -160,6 +172,7 @@ class Unit:
             "equipment": self.equipment.name,
             "tier": self.tier,
             "size": self.size,
+            "casualties": self.casualties,
             "attack": self.attack,
             "defense": self.defense,
             "power": self.power,
